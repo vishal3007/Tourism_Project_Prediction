@@ -10,7 +10,8 @@ from huggingface_hub import login, HfApi
 
 # Define constants for the dataset and output paths
 api = HfApi(token=os.getenv("HF_TOKEN"))
-DATASET_PATH = "hf://datasets/agarvish/Tourism-Package-Prediction/tourism.csv"
+DATASET_REPO_ID = "agarvish/Tourism-Package-Prediction"
+DATASET_PATH = f"hf://datasets/{DATASET_REPO_ID}/tourism.csv"
 tourism_dataset = pd.read_csv(DATASET_PATH)
 print("Dataset loaded successfully.")
 
@@ -71,6 +72,6 @@ for file_path in files:
     api.upload_file(
         path_or_fileobj=file_path,
         path_in_repo=file_path.split("/")[-1],  # just the filename
-        repo_id="agarvish/Tourism-Package-Prediction",
+        repo_id=DATASET_REPO_ID,
         repo_type="dataset",
     )
